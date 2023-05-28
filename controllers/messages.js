@@ -1,7 +1,6 @@
 const { date } = require('joi');
 const { Messages } = require('../models');
 
-// @ts-ignore
 const createMessages = async (data) => Messages.create({ content: data.content, sender: data.sender, chat: data.chat });
 
 const createPrivateMessages = async (data, to) => {
@@ -9,14 +8,10 @@ const createPrivateMessages = async (data, to) => {
   return result;
 };
 
-// @ts-ignore
 const getMessages = ({ last, chat }) => {
-  console.log(last);
-  console.log(typeof last);
   if (!last) {
     return Messages.find({ chat }).populate('sender');
   }
-  console.log('hi', (last));
   return Messages.find({ createdAt: { $gt: last } }).populate('sender');
 };
 
