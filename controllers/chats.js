@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { AppError } = require('../Lib');
 const { Chats, Users } = require('../models');
 
@@ -41,7 +40,6 @@ const createGroupChat = async ({ users, me, chatName }) => Chats.create({
 const editGroupChat = async ({
   me, chatName, chatId, users,
 }) => {
-  // eslint-disable-next-line no-useless-catch
   try {
     const chat = await Chats.findOne({ _id: chatId, users: { $elemMatch: { $eq: me } } });
     if (chatName) chat.chatName = chatName;
@@ -53,10 +51,7 @@ const editGroupChat = async ({
           if (!chat.users.includes(el.id)) chat.users.push(el.id);
           else throw new AppError('user already exists', 422);
         } else if (el.action === 'remove') {
-          console.log(el);
           const userIndex = chat.users.indexOf(el.id);
-          console.log(userIndex);
-          // eslint-disable-next-line camelcase
           if (userIndex === -1) throw new AppError("user deosn't exist", 422);
           else chat.users.splice(userIndex, 1);
         }
