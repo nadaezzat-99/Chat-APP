@@ -43,7 +43,6 @@ const userSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// @ts-ignore
 userSchema.pre('save', function hashPass(next) {
   this.password = bcrypt.hashSync(this.password, 10);
   next();
@@ -53,7 +52,6 @@ userSchema.methods.verifyPassword = function verifyPassword(pass) {
   return bcrypt.compareSync(pass, this.password);
 };
 
-// @ts-ignore
 userSchema.pre('updateOne', { document: true, query: false }, function hashPass(next) {
   this.password = bcrypt.hashSync(this.password, 10);
   next();
