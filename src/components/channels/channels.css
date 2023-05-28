@@ -1,0 +1,11 @@
+.channel{
+    display: flex;
+    cursor: pointer;
+    padding: 20px;
+    font-size: 1rem;
+
+}
+
+.chat{
+    padding-left: 15px;
+}
