@@ -7,7 +7,6 @@ const { chatsController } = require('../controllers');
 const { asycnWrapper } = require('../Lib');
 
 const router = express.Router();
-// Check Validation Individual Chat
 router.post('/', userAuth, validate(chatsValidator.accessChat), async (req, res, next) => {
   const { user, lastMessage } = req.body;
   try {
@@ -46,12 +45,5 @@ router.patch('/', userAuth, async (req, res, next) => {
   }
 });
 
-// router.delete('/', userAuth, async (req, res, next) => {
-//   const { last } = req.query;
-//   const messages = messagesController.getMessages(last);
-//   const [err, data] = await asycnWrapper(messages);
-//   if (err) return next(err);
-//   res.status(200).json({ messages: data });
-// });
 
 module.exports = router;
