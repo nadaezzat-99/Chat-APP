@@ -3,7 +3,6 @@ const AppError = require('../Lib/appError');
 const Users = require('../models/users');
 
 const verifyToken = async (token) => {
-  // @ts-ignore
   const decoded = jwt.verify(token, process.env.TOKEN_KEY);
   const user = await Users.findById(decoded.id);
   if (!user) return new AppError('un-Authenticated', 401);
