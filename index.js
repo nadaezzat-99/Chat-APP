@@ -1,4 +1,3 @@
-// @ts-nocheck
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -30,7 +29,6 @@ io.on('connection', (socket) => {
   socket.on('setup', async (userChats) => {
     socket.join(userChats.newRoom);
     if (userChats.previousRoom) socket.leave(userChats.previousRoom);
-    // @ts-ignore
     const allMessages = await messagesController.getMessages({ chat: userChats.newRoom });
     console.log(allMessages);
     socket.emit('connected', allMessages);
@@ -53,17 +51,6 @@ io.on('connection', (socket) => {
     io.to(chat).emit('room-messages', allMessages);
     socket.broadcast.emit('notifications', chat);
   });
-
-  // socket.on('new-message', async ({ data, user }) => {
-  //   const newMessage = await messagesController.createMessages(data);
-  //   socket.emit('message', newMessage);
-  //   socket.broadcast.emit('message', newMessage);
-  // });
-
-  // socket.on('private message', async ({ data, to, from }) => {
-  //   const newMessage = await messagesController.createPrivateMessages(data, to, from);
-  //   socket.emit('private message', newMessage);
-  // });
 });
 
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/whatsapp';
@@ -75,10 +62,9 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
-// @ts-ignore
 app.use(handleResponseError);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3050;
 server.listen(PORT, () => {
   console.log(`Up: localhost:${PORT}`);
 });
